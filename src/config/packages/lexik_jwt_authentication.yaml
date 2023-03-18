@@ -4,7 +4,7 @@ lexik_jwt_authentication:
     pass_phrase: '%env(JWT_PASSPHRASE)%'
     token_ttl: 97200 # token TTL in seconds, defaults to 1 hour
     #    token_ttl: 120 # token TTL in seconds, defaults to 1 hour
-    user_identity_field: email  # key under which the user identity will be stored in the token payload
+    user_identity_field: phone  # key under which the user identity will be stored in the token payload
     clock_skew: 0
 
     # token encoding/decoding settings
@@ -49,7 +49,7 @@ lexik_jwt_authentication:
             #            lifetime: 120
             samesite: strict
             path: /
-            domain: cliclishop.ru
+            domain: localhost
             httpOnly: false
             split:
                 - header
@@ -60,9 +60,9 @@ lexik_jwt_authentication:
             #            lifetime: 120
             samesite: strict
             path: /
-            domain: cliclishop.ru
+            domain: localhost
             httpOnly: true
             split:
                 - signature
         bearer:
-            domain: cliclishop.ru
+            domain: localhost

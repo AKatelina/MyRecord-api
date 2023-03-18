@@ -11,7 +11,8 @@ services:
       POSTGRES_DB: dbtest
     volumes:
       - ./DB:/var/lib/postgresql/data
-
+    ports:
+      - "8052:5432"
 
   my-record-php-fpm:
     container_name: my-record-php-fpm

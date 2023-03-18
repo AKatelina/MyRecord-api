@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\Emails;
 use App\Service\HashResetPassword;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -148,38 +149,33 @@ class SecurityController extends AbstractController
     /**
      * @Route("/registration", name="app_registration")
      */
-    public function registration(Request $request, UserPasswordHasherInterface $passwordHasher)
+    public function registration(Request $request, UserPasswordHasherInterface $passwordHasher,EntityManagerInterface $em)
     {
         $response = new Response();
         $data = $request->getContent();
 
-        $roles = $this->getUser()->getRoles()['0'];
-        if ($roles ==='ROLE_ADMIN') {
             $temp = json_decode($data, true);
 
             $user = new User();
 
-            $user->setUsername($temp['name']);
-            $user->setInn($temp['inn']);
-            $user->setInfoUser($temp['infoUser']);
-            $user->setStatus($temp['status']);
+            $user->setUsername('');
+//            $user->setInfoUser($temp['infoUser']);
+//            $user->setStatus($temp['status']);
             $user->setPhone($temp['phone']);
-            $user->setManager($temp['manager']);
-            $user->setAddress($temp['address']);
-            $user->setEmail($temp['email']);
+//            $user->setAddress($temp['address']);
+            $user->setEmail('');
             $user->setRoles([]);
-            $user->setFuncWork($temp['funcwork']);
             $user->setPassword($passwordHasher->hashPassword(
                 $user, $temp['password']
             ));
 
 
-            $em = $this->getDoctrine()->getManager();
+
             $em->persist($user);
 
             $em->flush();
             return $this->json(['idUser'=>$user->getId()]);
-        }
+
 
     }
     /**

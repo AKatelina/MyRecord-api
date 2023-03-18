@@ -37,7 +37,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
 
@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $infoUser;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255,  unique=true)
      */
     private $phone;
 
