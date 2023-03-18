@@ -1,0 +1,14 @@
+gesdinet_jwt_refresh_token:
+    refresh_token_class: App\Entity\RefreshToken
+    ttl: 2592000
+    return_expiration: true
+    user_identity_field: phone
+    single_use: true
+    cookie:
+        enabled: true
+        same_site: lax               # default value
+        path: /                      # default value
+        domain: service.cliclishop.ru                 # default value
+        http_only: false              # default value
+        secure: true                 # default value
+        remove_token_from_body: true # default value

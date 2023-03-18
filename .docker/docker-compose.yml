@@ -1,0 +1,39 @@
+version: '3.3'
+
+services:
+  my-record-db:
+    container_name: my-record-db
+    image: library/postgres:15.2-alpine3.17
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: dbtest
+    volumes:
+      - ./DB:/var/lib/postgresql/data
+
+
+  my-record-php-fpm:
+    container_name: my-record-php-fpm
+    build:
+      context: ./php-fpm
+    depends_on:
+      - my-record-db
+    volumes:
+      - ../src/:/var/www
+
+  my-record-nginx:
+    container_name: my-record-nginx
+    build:
+      context: ./nginx
+    volumes:
+      - ../src/:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - ./logs:/var/log
+    depends_on:
+      - my-record-php-fpm
+    ports:
+      - "8085:80"
+      - "7085:443"
