@@ -6,6 +6,7 @@ use App\Service\Emails;
 use App\Service\HashResetPassword;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpClient\CurlHttpClient;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 class SecurityController extends AbstractController
 {
     /**
@@ -143,7 +145,20 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+
+        unset($_COOKIE['jwt_hp']);
+        setcookie('jwt_hp', null, -1, '/');
+
+        unset($_COOKIE['jwt_s']);
+        setcookie('jwt_s', null, -1, '/');
+
+        unset($_COOKIE['bearer']);
+        setcookie('bearer', null, -1, '/');
+
+        unset($_COOKIE['refresh_token']);
+        setcookie('refresh_token', null, -1, '/');
+//        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        return $this->json(['status'=>'ok']);
     }
 
     /**

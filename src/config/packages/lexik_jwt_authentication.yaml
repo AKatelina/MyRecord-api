@@ -49,7 +49,7 @@ lexik_jwt_authentication:
             #            lifetime: 120
             samesite: strict
             path: /
-            domain: localhost
+            domain: my-record.dev
             httpOnly: false
             split:
                 - header
@@ -60,9 +60,9 @@ lexik_jwt_authentication:
             #            lifetime: 120
             samesite: strict
             path: /
-            domain: localhost
+            domain: my-record.dev
             httpOnly: true
             split:
                 - signature
         bearer:
-            domain: localhost
+            domain: my-record.dev
